@@ -1,0 +1,10 @@
+numpy
+pandas
+matplotlib
+seaborn
+scikit-learn
+google-cloud-storage
+datetime
+fastapi
+uvicorn
+pydantic
