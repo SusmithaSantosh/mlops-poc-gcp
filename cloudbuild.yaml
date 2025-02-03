@@ -1,49 +1,51 @@
 steps:
-# Build the Docker image
-- name: 'gcr.io/cloud-builders/docker'
-  args: 
-    - 'build'
-    - '-t'
-    - 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest'
-    - '.'
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - 'build'
+      - '-t'
+      - 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest'
+      - '.'
 
-# Push the Docker image to Artifact Registry
-- name: 'gcr.io/cloud-builders/docker'
-  args: 
-    - 'push'
-    - 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest'
+  # Push the Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: 
+      - 'push'
+      - 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest'
 
-# Deploy the image to Cloud Run
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args: 
-    - 'gcloud'
-    - 'run'
-    - 'deploy'
-    - 'titanic-model'
-    - '--image'
-    - 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest'
-    - '--platform'
-    - 'managed'
-    - '--region'
-    - 'us-central1'
-    - '--allow-unauthenticated'
+  # Deploy the image to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: 
+      - 'gcloud'
+      - 'run'
+      - 'deploy'
+      - 'titanic-model'
+      - '--image'
+      - 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest'
+      - '--platform'
+      - 'managed'
+      - '--region'
+      - 'us-central1'
+      - '--allow-unauthenticated'
 
-# Store the model and metrics in Cloud Storage
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args: 
-    - 'gsutil'
-    - 'cp'
-    - 'model.pkl'
-    - 'gs://mlops-poc-gcp/models/model.pkl'
+  # Store the model and metrics in Cloud Storage
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: 
+      - 'gsutil'
+      - 'cp'
+      - 'model.pkl'
+      - 'gs://mlops-poc-gcp/models/model.pkl'
 
-- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  args: 
-    - 'gsutil'
-    - 'cp'
-    - 'metrics.json'
-    - 'gs://mlops-poc-gcp/models/metrics.json'
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args: 
+      - 'gsutil'
+      - 'cp'
+      - 'metrics.json'
+      - 'gs://mlops-poc-gcp/models/metrics.json'
 
 images:
-- 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest'
+  - 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest'
 
-logging: CLOUD_LOGGING_ONLY
+# Optional: Specify logging options
+options:
+  logging: CLOUD_LOGGING_ONLY
