@@ -1,15 +1,15 @@
 steps:
   # Build the Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-poc/titanic-model:latest', '.']
+    args: ['build', '-t', 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest', '.']
 
   # Push the Docker image to Artifact Registry
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-poc/titanic-model:latest']
+    args: ['push', 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest']
 
   # Deploy the image to Cloud Run
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    args: ['gcloud', 'run', 'deploy', 'titanic-model', '--image', 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-poc/titanic-model:latest', '--platform', 'managed', '--region', 'us-central1', '--allow-unauthenticated']
+    args: ['gcloud', 'run', 'deploy', 'titanic-model', '--image', 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest', '--platform', 'managed', '--region', 'us-central1', '--allow-unauthenticated']
 
   # Store the model and metrics in Cloud Storage
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -18,6 +18,6 @@ steps:
     args: ['gsutil', 'cp', 'metrics.json', 'gs://mlops-poc-gcp/models/metrics.json']
 
 images:
-  - 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-poc/titanic-model:latest'
+  - 'us-central1-docker.pkg.dev/gabon-palm-ai-ml/mlops-repo/titanic-model:latest'
 
 logging: CLOUD_LOGGING_ONLY
