@@ -27,6 +27,8 @@ steps:
       - '--region'
       - 'us-central1'
       - '--allow-unauthenticated'
+      - '--port'
+      - '8080'
 
   # Store the model and metrics in Cloud Storage
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
