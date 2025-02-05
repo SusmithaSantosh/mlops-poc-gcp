@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Expose the port your app will run on (e.g., 8080 for Flask/FastAPI)
-EXPOSE 8080
+EXPOSE 8081
 
 # Command to run the application
 CMD ["uvicorn", "app:app", "--host", "0.0.0.0", "--port", "8081"]
