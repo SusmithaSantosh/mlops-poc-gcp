@@ -48,5 +48,5 @@ def predict(passenger: PassengerData):
 # Run the app with Uvicorn
 if __name__ == "__main__":
     import uvicorn
-    port = int(os.environ.get("PORT", 8080))  # Use PORT environment variable
+    port = int(os.environ.get("PORT", 8081))  # Use PORT environment variable
     uvicorn.run(app, host="0.0.0.0", port=port)
